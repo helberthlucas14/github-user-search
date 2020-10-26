@@ -20,11 +20,14 @@ const ResultSearch = ({ userName }: Props) => {
         axios.get(`https://api.github.com/users/${name}`)
             .then(response => setUserResponse(response.data))
             .catch(err => { alert(`Não foi possivel buscar usuario \n${err}`) })
-            .finally(() => setIsloading(user ? false : true))
+            .finally(() => setIsloading(false))
     }
+
     useEffect(() => {
-        makeRequest(userName)
-    }, [userName,user]);
+        if (!user) {
+            makeRequest(userName)
+        }
+    }, [userName, user]);
 
     return (
         <div className="row">
